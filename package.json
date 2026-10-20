@@ -1,0 +1,17 @@
+{
+  "name": "qiqi-workbuddy-work-review",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first work reviews generated from WorkBuddy conversation history.",
+  "license": "MIT",
+  "repository": "https://github.com/qiqi-huang-ai/qiqi-workbuddy-work-review",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "check": "node --test && node --check server.mjs && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

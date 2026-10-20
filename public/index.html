@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>WorkBuddy 工作复盘</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="WorkBuddy 工作复盘首页">
+        <span class="brand-mark">回</span>
+        <span>WorkBuddy 工作复盘</span>
+      </a>
+      <nav aria-label="主要导航">
+        <button class="nav-item active" data-page="overview">总览</button>
+        <button class="nav-item" data-page="review">复盘工作台</button>
+        <button class="nav-item" data-page="data">数据与规则</button>
+      </nav>
+      <div class="mode-pill"><span class="status-dot"></span><span id="mode-status">检查连接中</span></div>
+    </header>
+
+    <main>
+      <section class="page active" id="page-overview">
+        <div class="hero">
+          <div>
+            <p class="eyebrow" id="today-label">工作证据，而不是努力分</p>
+            <h1>看清实际发生的事，<br />再决定下一步。</h1>
+            <p class="hero-copy">从国内版 WorkBuddy 的真实工作记录出发，区分讨论、计划、推进与可验证完成。</p>
+            <button class="primary" data-go="review">开始一次复盘</button>
+          </div>
+          <div class="hero-orbit" aria-hidden="true">
+            <span class="orbit one"></span><span class="orbit two"></span>
+            <div class="orbit-core">AAR</div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card"><span>WorkBuddy 数据源</span><strong id="source-metric">检查中</strong><small id="source-detail">正在验证本地记录</small></article>
+          <article class="metric-card"><span>已保存复盘</span><strong id="review-count">—</strong><small>自定义时间段</small></article>
+          <article class="metric-card"><span>规则版本</span><strong id="rules-version">—</strong><small>内置原创规则</small></article>
+        </div>
+
+        <div class="section-heading"><div><p class="eyebrow">RECENT</p><h2>最近复盘</h2></div><button class="text-button" data-go="review">生成新复盘</button></div>
+        <div id="recent-reviews" class="review-list empty-state">还没有导入复盘。先从一个真实工作日开始。</div>
+      </section>
+
+      <section class="page" id="page-review">
+        <div class="page-heading">
+          <div><p class="eyebrow">REVIEW WORKSPACE</p><h1>复盘工作台</h1><p>用日期确定范围；需要时再用关键词和手动勾选缩小证据。</p></div>
+        </div>
+
+        <section class="filter-panel">
+          <div class="filter-grid">
+            <label>开始日期<input id="start-date" type="date" /></label>
+            <label>结束日期<input id="end-date" type="date" /></label>
+            <label>关键词<input id="conversation-search" type="search" placeholder="可选，搜索完整对话正文" /></label>
+            <button class="primary" id="load-conversations">查找对话</button>
+          </div>
+          <p class="filter-help">关键词留空时按日期读取全部对话；填写关键词后会显示命中位置和上下文。</p>
+        </section>
+
+        <div class="selection-bar"><span id="conversation-summary">尚未读取对话</span><div><button class="text-button" id="select-all-conversations">全选</button><button class="text-button" id="clear-conversations">清空</button></div></div>
+        <div id="conversation-list" class="conversation-list empty-state">确定范围后点击“查找对话”。</div>
+
+        <section class="generation-panel">
+          <div>
+            <p class="eyebrow">FINAL SCOPE</p>
+            <h2>确认本次复盘证据</h2>
+            <div class="scope-switch" role="group" aria-label="证据范围">
+              <button class="active" data-scope-mode="all">使用全部匹配结果</button>
+              <button data-scope-mode="selected">仅使用已勾选对话</button>
+            </div>
+            <p id="selection-note" class="selection-note">请先查找对话。</p>
+          </div>
+          <div class="generation-form">
+            <label>补充资料（可选）<textarea id="manual-notes" rows="4" placeholder="原计划、实际动作、已确认工时，或当前卡点。没有也可以继续。"></textarea></label>
+            <p class="muted">只有点击下方按钮时才会调用 WorkBuddy。生成前不会后台分析。</p>
+            <button class="primary" id="generate-review" disabled>生成复盘</button>
+            <div id="generation-result" class="result-box hidden"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="page-data">
+        <div class="page-heading"><div><p class="eyebrow">SOURCES & RULES</p><h1>数据与规则</h1><p>查看本地数据源、WorkBuddy 连接和本次使用的规则版本。</p></div></div>
+        <div class="data-grid">
+          <section class="source-panel"><div class="panel-head"><h2>资料来源</h2><span class="secure-label">本地只读</span></div><div id="connector-list" class="connector-list"></div></section>
+          <section class="source-panel"><div class="panel-head"><h2>复盘规则</h2><span id="rules-status" class="secure-label">读取中</span></div><dl class="rule-list"><div><dt>名称</dt><dd>WorkBuddy Review Rules</dd></div><div><dt>路径</dt><dd id="rules-path">—</dd></div><div><dt>版本</dt><dd id="rules-version-detail">—</dd></div><div><dt>原则</dt><dd>证据优先 · 状态分层 · 用户修正优先</dd></div></dl></section>
+          <section class="source-panel full"><div class="panel-head"><h2>数据位置</h2><span class="secure-label">本地保存</span></div><p id="data-root" class="data-root">—</p><div class="path-grid"><code>sources/workbuddy/</code><span>采集批次元数据</span><code>normalized/</code><span>范围证据包</span><code>reviews/</code><span>WorkBuddy 复盘版本</span><code>corrections/</code><span>用户修正</span></div></section>
+        </div>
+      </section>
+    </main>
+
+    <aside id="review-drawer" class="drawer" aria-hidden="true">
+      <div class="drawer-head"><div><p class="eyebrow">REVIEW DETAIL</p><h2 id="drawer-title">复盘详情</h2></div><button id="close-drawer" class="close-button" aria-label="关闭">×</button></div>
+      <div class="drawer-body"><div id="drawer-content" class="markdown-view"></div><label>我的修正<textarea id="correction-content" rows="8" placeholder="你的确认、补充和修正会单独保存，不被重新生成覆盖。"></textarea></label><button class="primary" id="save-correction">保存个人修正</button></div>
+    </aside>
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+    <div id="toast" class="toast" role="status"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

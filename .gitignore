@@ -1,0 +1,17 @@
+# Real local evidence and reviews must never be committed.
+.DS_Store
+node_modules/
+.env
+.workbench.pid
+
+data/sources/workbuddy/*.json
+data/normalized/*.json
+data/reviews/*.json
+data/corrections/*.json
+data/rules/*.json
+data/logs/*.json
+data/logs/*.log
+
+# Keep directory markers and explicitly脱敏 demo fixtures.
+!data/**/.gitkeep
+!data/demo/*.json
